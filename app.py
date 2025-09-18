@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, session, s
 import sqlite3, hashlib, os, qrcode, random, csv
 from datetime import datetime, timedelta
 from functools import wraps
-
 # ---------------- App Setup ----------------
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -95,10 +94,15 @@ def index():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        name = request.form["name"].strip()
-        email = request.form["email"].strip().lower()
-        password = request.form["password"]
-        confirm = request.form["confirm_password"]
+        name = request.form.get("name", "").strip()
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
+        confirm = request.form.get("confirm_password", "")
+
+        # Basic validations
+        if not name or not email or not password:
+            flash("All fields are required!")
+            return redirect(url_for("signup"))
 
         if password != confirm:
             flash("Passwords do not match!")
@@ -107,23 +111,19 @@ def signup():
         hashed_pw = hashlib.sha256(password.encode()).hexdigest()
 
         try:
-            conn = get_db_connection()
-            conn.execute(
-                "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-                (name, email, hashed_pw),
-            )
-            conn.commit()
+            with get_db_connection() as conn:
+                conn.execute(
+                    "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+                    (name, email, hashed_pw),
+                )
+                conn.commit()
             flash("Account created successfully! Please login.")
+            return redirect(url_for("login"))
         except sqlite3.IntegrityError:
             flash("Email already exists. Please use another.")
             return redirect(url_for("signup"))
-        finally:
-            conn.close()
-
-        return redirect(url_for("login"))
 
     return render_template("user_signup.html")
-
 
 # ---------------- User Login ----------------
 @app.route("/login", methods=["GET", "POST"])
