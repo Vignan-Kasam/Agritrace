@@ -1,0 +1,8 @@
+id,farmer_name,crop_name,variety,location,harvest_date,quantity,price,total,data_hash,qr_code_path,status,user_id,rejected_date
+1,Thor,wheat,grains,hyderabad,2025-09-04,223,120.0,26760.0,fd9161ac8f2921386adc43a877229f017667ecbaef0776cd7e002c13065e83a8,static/qr_codes/crop_1.png,Approved,1,
+2,pechala saikoushik,wheat,grains,hyderabad,2025-09-17,455,100.0,45500.0,a210188640744e7fd329d6c9fa52c0954cd8f72357cbe7e700c2401ef87c4b21,static/qr_codes/crop_2.png,Approved,1,
+3,Vallapu vishnu,Wheat,Rice,Cherukupally,2025-09-06,500,25.0,12500.0,4a6590fdf2767d3b358dd0a5b1353bc2efe25a30c2ac71bd1a0dd27a150a5eb0,static/qr_codes/crop_3.png,Approved,3,
+5,Vignan,Aloo,Heirloom,Ramayampet,2025-09-06,200,20.0,4000.0,56da94cfc7404e715915876170e842cbaced8353203ca11f979cbf6663634622,static/qr_codes/crop_5.png,Approved,2,
+6,Nandu,Paddy,Rice,Bhadrachalam,2025-09-07,75,10.0,750.0,ec5548d096a04aa8b0ee9ce39612a9b58683a0f9526753f6da79c909396536b8,static/qr_codes/crop_6.png,Approved,7,
+7,njdhguiaejrn,potato,henjsdh,"road no.2,gatkesar,hyderabad",2025-09-26,20,30.0,600.0,436071379f6eda7eb4b534e0d3ce853be9b6ebb274ffb79f97dd6369fca61784,static/qr_codes/crop_7.png,Approved,6,
+8,uhrgekd,mango,hdhiufbf,"road no.2,gatkesar,hyderabad",2025-09-26,30,20.0,600.0,88ad6b5d7cc76815749932be7b394a3abade8d5eeae106c9d2893f26fdcdd193,static/qr_codes/crop_8.png,Approved,6,

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - AgriTrace</title>
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c5e2d;
+            --secondary-color: #388E3C;
+            --accent-color: #ffd700;
+            --light-bg: #f8f9fa;
+            --dark-text: #333;
+            --light-text: #fff;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+        }
+
+        /* Navbar */
+        .header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--light-text); }
+        .nav-links { list-style: none; display: flex; gap: 2rem; }
+        .nav-links a { color: var(--light-text); text-decoration: none; font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-color); }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; }
+
+        /* Main */
+        main { max-width: 1200px; margin: 2rem auto; padding: 1rem; }
+
+        h1, h2 { text-align: center; color: var(--primary-color); margin-bottom: 1rem; }
+        /* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 10px;             /* scrollbar width */
+  height: 10px;            /* scrollbar height */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;     /* light track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2c5e2d;     /* your green color */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #234b24;     /* darker shade on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;                  /* auto | thin | none */
+  scrollbar-color: #2c5e2d #f1f1f1;       /* thumb | track */
+}
+
+
+        /* Table */
+        .table-container {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 1.0rem;
+            margin-bottom: 2.5rem;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+        th {
+            background: var(--primary-color);
+            color: #fff;
+        }
+        tr:nth-child(even) { background: #fafafa; }
+
+
+        a.approve, a.reject, a.delete {
+    padding: 8px 16px;      
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 10px;         
+    transition: all 0.3s ease;  
+    margin: 0 6px;              
+    display: inline-block;      
+}
+
+a.approve { 
+    background: #2e7d32; 
+    color: #fff; 
+}
+
+a.reject { 
+    background: #f57c00; 
+    color: #fff; 
+}
+
+a.delete { 
+    background: #c62828; 
+    color: #fff; 
+}
+
+a.approve:hover, a.reject:hover, a.delete:hover { 
+    transform: translateY(-2px); /* subtle lift on hover */
+    opacity: 0.9; 
+}
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; flex-direction: column; width: 100%; background: var(--primary-color); position: absolute; top: 60px; left: 0; padding: 1rem 0; }
+            .nav-links.active { display: flex; }
+            .nav-links li { text-align: center; padding: 0.5rem 0; }
+            .hamburger { display: block; color: #fff; }
+            table { font-size: 0.85rem; }
+        }
+.btn {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="{{ url_for('index') }}" class="logo">AgriTrace 🌱</a>
+        <nav>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+                <li><a href="{{ url_for('register') }}">Crop Registration</a></li>
+                <li><a href="{{ url_for('scan') }}">Consumer Scan</a></li>
+                <li><a href="{{url_for('my_catlog')}}">Catalog</a></li>
+                <li><a href="{{ url_for('admin_logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    </header>
+
+    <main>
+        <h1>Admin Dashboard</h1>
+
+        <!-- Crops Table -->
+        <div class="table-container">
+            <h2>Registered Crops</h2>
+            <table>
+                <a href="{{ url_for('export_table', table='crops') }}" class="btn">Export Crops</a>
+                <tr>
+                    <th>ID</th>
+                    <th>Farmer Name</th>
+                    <th>Crop Name</th>
+                    <th>Variety</th>
+                    <th>Location</th>
+                    <th>Harvest Date</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Price/kg</th>
+                    <th>Total</th>
+                    <th>QR Code</th>
+                    <th>Actions</th>
+                </tr>
+                {% for crop in crops %}
+                <tr>
+                    <td>{{ crop.id }}</td>
+                    <td>{{ crop.farmer_name }}</td>
+                    <td>{{ crop.crop_name }}</td>
+                    <td>{{ crop.variety }}</td>
+                    <td>{{ crop.location }}</td>
+                    <td>{{ crop.harvest_date }}</td>
+                    <td>{{ crop.quantity }}</td>
+                    <td>{{ crop.status }}</td>
+                    <td>₹{{ crop.price }}</td>
+                    <td>₹{{ crop.quantity * crop.price }}</td>
+                    <td><img src="{{ url_for('static', filename='qr_codes/crop_' ~ crop.id ~ '.png') }}" width="70"></td>
+                    <td>
+                        {% if crop.status == 'Pending' %}
+                            <a href="{{ url_for('approve_crop', crop_id=crop.id) }}" class="approve">Approve</a>
+                            <a href="{{ url_for('reject_crop', crop_id=crop.id) }}" class="reject" onclick="return confirm('Reject this crop?')">Reject</a>
+                        {% else %}
+                            {{ crop.status }}
+                        {% endif %}
+                        <a href="{{ url_for('delete_crop', crop_id=crop.id) }}" class="delete" onclick="return confirm('Delete this crop?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-container">
+            <h2>Registered Users</h2>
+            <a href="{{ url_for('export_table', table='users') }}" class="btn">Export Users</a>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_user', user_id=user.id) }}" class="delete" onclick="return confirm('Delete this user?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
